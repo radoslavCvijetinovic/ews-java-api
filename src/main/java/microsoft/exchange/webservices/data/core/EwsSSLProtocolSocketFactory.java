@@ -23,12 +23,13 @@
 
 package microsoft.exchange.webservices.data.core;
 
-import org.apache.http.conn.ssl.DefaultHostnameVerifier;
+//import org.apache.http.conn.ssl.DefaultHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.ssl.SSLContexts;
+import org.apache.http.conn.ssl.*;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 
 import java.security.GeneralSecurityException;
@@ -78,17 +79,15 @@ import java.security.GeneralSecurityException;
 
 public class EwsSSLProtocolSocketFactory extends SSLConnectionSocketFactory {
 
-  /**
-   * Default hostname verifier.
-   */
-  private static final HostnameVerifier DEFAULT_HOSTNAME_VERIFIER = new DefaultHostnameVerifier();
+	/**
+	 * Default hostname verifier.
+	 */
+	private static final X509HostnameVerifier DEFAULT_HOSTNAME_VERIFIER = SSLConnectionSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER;
 
-
-  /**
-   * The SSL Context.
-   */
-  private final SSLContext sslcontext;
-
+	/**
+	 * The SSL Context.
+	 */
+	private final SSLContext sslcontext;
 
   /**
    * Constructor for EasySSLProtocolSocketFactory.
@@ -97,7 +96,7 @@ public class EwsSSLProtocolSocketFactory extends SSLConnectionSocketFactory {
    * @param hostnameVerifier hostname verifier
    */
   public EwsSSLProtocolSocketFactory(
-    SSLContext context, HostnameVerifier hostnameVerifier
+    SSLContext context, X509HostnameVerifier hostnameVerifier
   ) {
     super(context, hostnameVerifier);
     this.sslcontext = context;
@@ -126,7 +125,7 @@ public class EwsSSLProtocolSocketFactory extends SSLConnectionSocketFactory {
    * @throws GeneralSecurityException on security error
    */
   public static EwsSSLProtocolSocketFactory build(
-    TrustManager trustManager, HostnameVerifier hostnameVerifier
+    TrustManager trustManager, X509HostnameVerifier hostnameVerifier
   ) throws GeneralSecurityException {
     SSLContext sslContext = createSslContext(trustManager);
     return new EwsSSLProtocolSocketFactory(sslContext, hostnameVerifier);

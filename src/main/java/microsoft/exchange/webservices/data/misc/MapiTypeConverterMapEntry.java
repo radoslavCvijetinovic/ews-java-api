@@ -30,7 +30,7 @@ import microsoft.exchange.webservices.data.core.exception.misc.ArgumentException
 import microsoft.exchange.webservices.data.core.exception.misc.ArgumentNullException;
 import microsoft.exchange.webservices.data.core.exception.misc.FormatException;
 import microsoft.exchange.webservices.data.core.exception.service.local.ServiceXmlDeserializationException;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
